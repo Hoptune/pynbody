@@ -330,7 +330,7 @@ class AHFCatalogue(HaloCatalogue):
         boundaries = np.vstack((boundaries[:-1], boundaries[1:])).T
         particle_ids = np.empty(boundaries[-1,1], dtype=int)
         with util.open_(self._ahfBasename + 'particles') as f:
-            f.readline()
+            # f.readline()
             for nparts, (start, end) in zip(self._halo_properties['npart'], boundaries):
                 tline = f.readline()
                 if len(tline.split()) == 1:
