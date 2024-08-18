@@ -226,12 +226,14 @@ class AHFCatalogue(HaloCatalogue):
                         tline = f.readline().split()
                         if len(tline) == 1:
                             nhalo_loaded += int(tline[0])
+                            print(nhalo, nhalo_loaded)
                             tline = f.readline().split()
                         npart = int(tline[0].strip())
                         assert npart == self._halo_properties['npart'][hnum]
                         self._fpos[hnum] = f.tell()
                         for i in range(npart):
                             f.readline()
+                    
                     assert nhalo == nhalo_loaded
                 if self._try_writing_fpos:
                     if not os.path.exists(self._ahfBasename + 'fpos'):
