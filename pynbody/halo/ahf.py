@@ -332,7 +332,9 @@ class AHFCatalogue(HaloCatalogue):
         with util.open_(self._ahfBasename + 'particles') as f:
             f.readline()
             for nparts, (start, end) in zip(self._halo_properties['npart'], boundaries):
-                f.readline()
+                tline = f.readline()
+                if len(tline.split()) == 1:
+                    f.readline()
                 particle_ids[start:end] = self._load_ahf_particle_block(f, nparts=nparts)
 
 
