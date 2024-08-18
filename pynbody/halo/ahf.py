@@ -115,7 +115,7 @@ class AHFCatalogue(HaloCatalogue):
 
         super().__init__(sim, number_mapper)
 
-        self._remap_host_halo_property()
+        # self._remap_host_halo_property()
 
         if self._use_iord:
             self._init_iord_to_fpos()
@@ -216,14 +216,18 @@ class AHFCatalogue(HaloCatalogue):
             else:
                 self._fpos = np.empty(len(self.number_mapper), dtype=int)
                 with util.open_(self._ahfBasename + 'particles') as f:
-                    nhalo = int(f.readline().strip())
-                    assert nhalo == len(self.number_mapper)
-                    for hnum in range(nhalo):
-                        npart = int(f.readline().strip())
-                        assert npart == self._halo_properties['npart'][hnum]
-                        self._fpos[hnum] = f.tell()
-                        for i in range(npart):
-                            f.readline()
+                    nhalo_tot = len(self.number_mapper)
+                    while nhalo_tot > 0:
+                        nhalo = int(f.readline().strip())
+                        assert nhalo > 0
+                    # assert nhalo == len(self.number_mapper)
+                        for hnum in range(nhalo):
+                            npart = int(f.readline().split()[0].strip())
+                            assert npart == self._halo_properties['npart'][hnum]
+                            self._fpos[hnum] = f.tell()
+                            for i in range(npart):
+                                f.readline()
+                        nhalo_tot -= nhalo
                 if self._try_writing_fpos:
                     if not os.path.exists(self._ahfBasename + 'fpos'):
                         self._write_fpos()
