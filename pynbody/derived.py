@@ -282,7 +282,7 @@ def u(self):
 
 
 @SimSnap.derived_array
-def temp(self):
+def guessed_temp(self):
     """Gas temperature derived from internal energy"""
     gamma = 5. / 3
     mu_est = np.ones(len(self))
