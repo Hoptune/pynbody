@@ -105,7 +105,7 @@ def _construct_gadget_header(data, endian='='):
     mass = np.zeros(N_TYPE)
     time = 0.
     redshift = 0.
-    npartTotal = np.zeros(N_TYPE, dtype=np.int32)
+    npartTotal = np.zeros(N_TYPE, dtype=np.int64)
     num_files = 0
     BoxSize = 0.
     Omega0 = 0.
